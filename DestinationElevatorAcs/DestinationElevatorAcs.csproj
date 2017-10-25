@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D1A7CA6B-2D52-4F6E-A6A2-5245980A7061}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>DestinationElevatorAccessControl</RootNamespace>
+    <AssemblyName>DestinationElevatorAccessControl</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ACCSInterface">
+      <HintPath>..\..\..\..\..\..\Incomings\SDK Client\SDK Client\bin\Debug\ACCSInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="ACEntities">
+      <HintPath>..\..\..\..\..\..\Incomings\SDK Client\SDK Client\bin\Debug\ACEntities.dll</HintPath>
+    </Reference>
+    <Reference Include="CommonHelpers">
+      <HintPath>..\..\..\..\..\..\Incomings\SDK Client\SDK Client\bin\Debug\CommonHelpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Net_Remoting">
+      <HintPath>..\..\..\..\..\..\Incomings\SDK Client\SDK Client\bin\Debug\Net_Remoting.dll</HintPath>
+    </Reference>
+    <Reference Include="RILShared">
+      <HintPath>..\..\..\..\..\..\Incomings\SDK Client\SDK Client\bin\Debug\RILShared.dll</HintPath>
+    </Reference>
+    <Reference Include="Rosslare.Reporting.Data">
+      <HintPath>..\..\..\..\..\..\Incomings\SDK Client\SDK Client\bin\Debug\Rosslare.Reporting.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="RosslareSystemEventArgs">
+      <HintPath>..\..\..\..\..\..\Incomings\SDK Client\SDK Client\bin\Debug\RosslareSystemEventArgs.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceConsumptionObject">
+      <HintPath>..\..\..\..\..\..\Incomings\SDK Client\SDK Client\bin\Debug\ServiceConsumptionObject.dll</HintPath>
+    </Reference>
+    <Reference Include="SharedResources">
+      <HintPath>..\..\..\..\..\..\Incomings\SDK Client\SDK Client\bin\Debug\SharedResources.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AxTraxNg\Client.cs" />
+    <Compile Include="Elip\Client.cs" />
+    <Compile Include="Elip\Messages\Factory.cs" />
+    <Compile Include="Elip\Messages\Header.cs" />
+    <Compile Include="Elip\Messages\HealthCheck.cs" />
+    <Compile Include="Elip\Messages\IMessage.cs" />
+    <Compile Include="Elip\Messages\ManualRegistration.cs" />
+    <Compile Include="Elip\Messages\ManualRegistrationResponse.cs" />
+    <Compile Include="ProjectInstaller.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ProjectInstaller.Designer.cs">
+      <DependentUpon>ProjectInstaller.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Service.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Service.Designer.cs">
+      <DependentUpon>Service.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ProjectInstaller.resx">
+      <DependentUpon>ProjectInstaller.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Service.resx">
+      <DependentUpon>Service.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
