@@ -21,6 +21,14 @@ namespace DestinationElevatorAcs
 
             try
             {
+                var configMapping = System.Configuration.ConfigurationManager.GetSection("readersMapping") as ReadersMapping;
+
+                foreach (ReadersMappingElement mapping in configMapping.Instances)
+                {
+                    myReadersMapping.Add(byte.Parse(mapping.ReaderId), byte.Parse(mapping.PanelId));
+                    System.Diagnostics.Trace.TraceInformation("Mapping loaded: readerId={0}, panelId={1}", mapping.ReaderId, mapping.PanelId);
+                }
+
                 var elipHost = System.Configuration.ConfigurationManager.AppSettings["ElipHost"];
                 var elipPort = int.Parse(System.Configuration.ConfigurationManager.AppSettings["ElipPort"]);
                 var elipHealthCheckPeriod = int.Parse(System.Configuration.ConfigurationManager.AppSettings["ElipHealthCheckPeriod"]);
@@ -66,14 +74,18 @@ namespace DestinationElevatorAcs
 
         private void HandleAccessEvent(object aSource, AxTraxNg.Client.AccessEventArgs aArgs)
         {
+            
             Elip.Messages.ManualRegistration.Floor[] floors = Array.ConvertAll(aArgs.FloorsIds, v => new Elip.Messages.ManualRegistration.Floor((byte)v, Elip.Messages.ManualRegistration.DoorsOpeningE.Front));
-            myElipClient.Send(new Elip.Messages.ManualRegistration(floors, Elip.Messages.ManualRegistration.AttributionE.General, (byte)aArgs.ReaderId, mySequenceNumber++));
+            myElipClient.Send(new Elip.Messages.ManualRegistration(floors, Elip.Messages.ManualRegistration.AttributionE.General, myReadersMapping[(byte)aArgs.ReaderId], mySequenceNumber++));
         }
 
         private Elip.Client myElipClient = null;
+        private System.Collections.Generic.Dictionary<byte, byte> myReadersMapping = new System.Collections.Generic.Dictionary<byte, byte>();
         private volatile byte mySequenceNumber = 0;
         private const int kExitCode = 1066;
         private const string kLogName = "Destination Elevator ACS Events";
         private const string kEventSourceName = "Destination Elevator ACS Service";
+
+
     }
 }
