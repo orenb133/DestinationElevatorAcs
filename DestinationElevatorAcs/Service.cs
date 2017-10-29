@@ -74,9 +74,10 @@ namespace DestinationElevatorAcs
 
         private void HandleAccessEvent(object aSource, AxTraxNg.Client.AccessEventArgs aArgs)
         {
-            
+            byte mappedReaderId = (byte)aArgs.ReaderId;
+            myReadersMapping.TryGetValue(mappedReaderId, out mappedReaderId);
             Elip.Messages.ManualRegistration.Floor[] floors = Array.ConvertAll(aArgs.FloorsIds, v => new Elip.Messages.ManualRegistration.Floor((byte)v, Elip.Messages.ManualRegistration.DoorsOpeningE.Front));
-            myElipClient.Send(new Elip.Messages.ManualRegistration(floors, Elip.Messages.ManualRegistration.AttributionE.General, myReadersMapping[(byte)aArgs.ReaderId], mySequenceNumber++));
+            myElipClient.Send(new Elip.Messages.ManualRegistration(floors, Elip.Messages.ManualRegistration.AttributionE.General, mappedReaderId, mySequenceNumber++));
         }
 
         private Elip.Client myElipClient = null;
