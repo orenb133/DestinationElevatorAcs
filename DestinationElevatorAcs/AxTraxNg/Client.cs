@@ -53,7 +53,7 @@ namespace DestinationElevatorAcs.AxTraxNg
                     // Extract reader and doors from server received event and fire our oun event
                     var eventPanelInfo = (Rosslare.Musketeer.Shared.ACEntities.EventPanelInfo)entityInfo;
                     var eventEmployeeInfo = ServiceConsumptionObject.PoolingServiceHandling.Instance._service.GetEmployeeByCardNum(eventPanelInfo.iCardCode, (short)(eventPanelInfo.iSiteCode));
-                    var doors = ServiceConsumptionObject.PoolingServiceHandling.Instance._service.GetOutputPanelByGroupPanel(eventPanelInfo.IdPanel, eventEmployeeInfo.IdOutputsGroup);
+                    var doors = ServiceConsumptionObject.PoolingServiceHandling.Instance._service.GetOutputPanelByGroup(eventEmployeeInfo.IdOutputsGroup);
                     int[] doorIds = System.Array.ConvertAll(doors, v => v.IdInOut);
 
                     System.Diagnostics.Trace.TraceInformation("AxTraxNG client received access event: readerId={0}, fullName={1}, cardCode={2}, doors={3}", 
